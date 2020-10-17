@@ -1,10 +1,12 @@
 package com.example.madlevel3task2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +32,7 @@ class StartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
+        observeAddReminderResult()
     }
 
     private fun initViews() {
@@ -37,6 +40,16 @@ class StartFragment : Fragment() {
         rvPortals.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvPortals.adapter = portalAdapter
         rvPortals.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+    }
+
+    private fun observeAddReminderResult() {
+        setFragmentResultListener(REQ_REMINDER_KEY) { key, bundle ->
+            bundle.getParcelable<Portal>(BUNDLE_REMINDER_KEY)?.let {
+                portals.add(it)
+                portalAdapter.notifyDataSetChanged()
+            } ?: Log.e("ReminderFragment", "Request triggered, but empty reminder text!")
+
+        }
     }
 
 }

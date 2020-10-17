@@ -13,4 +13,5 @@
     <string name="title" >Title</string>
     <string name="url" >Url</string>
     <string name="http" >http://</string>
+    <string name="not_valid_portal" >Invalid portal</string>
 </resources>
