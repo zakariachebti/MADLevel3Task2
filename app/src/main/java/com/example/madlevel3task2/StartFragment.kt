@@ -1,12 +1,13 @@
 package com.example.madlevel3task2
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -21,8 +22,8 @@ class StartFragment : Fragment(), PortalAdapter.OnItemClickListener {
     private val portalAdapter = PortalAdapter(portals, this)
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_start, container, false)
@@ -39,7 +40,7 @@ class StartFragment : Fragment(), PortalAdapter.OnItemClickListener {
         // Initialize the recycler view with a linear layout manager, adapter
         rvPortals.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         rvPortals.adapter = portalAdapter
-        rvPortals.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+        rvPortals.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
     private fun observeAddReminderResult() {
@@ -59,5 +60,8 @@ class StartFragment : Fragment(), PortalAdapter.OnItemClickListener {
 
     private fun openChromeTab(url: String) {
 
+        val builder = CustomTabsIntent.Builder().build()
+        builder.launchUrl(context, Uri.parse(url))
     }
+
 }
